@@ -4,6 +4,19 @@
 # Log file
 *.log
 
+# Maven
+target/
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# OS files
+.DS_Store
+Thumbs.db
+
 # BlueJ files
 *.ctxt
 
