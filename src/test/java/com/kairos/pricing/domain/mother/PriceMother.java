@@ -17,6 +17,7 @@ public class PriceMother {
                 1L,
                 LocalDateTime.of(2020, 6, 14, 0, 0),
                 LocalDateTime.of(2020, 12, 31, 23, 59),
+                17,
                 priority,
                 new BigDecimal("35.50"),
                 "EUR"

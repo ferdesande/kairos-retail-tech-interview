@@ -8,6 +8,7 @@ public record Price(
         Long brandId,
         LocalDateTime startDate,
         LocalDateTime endDate,
+        Integer priceList,
         Integer priority,
         BigDecimal amount,
         String currency
