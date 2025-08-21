@@ -10,12 +10,39 @@ An example of a pricing service created with Java 21 and Spring Boot 3 that demo
 - H2 Database
 - Maven
 
+## Architecture
+
+This project follows hexagonal architecture principles with clear separation of concerns. The global architecture is
+defined in the [architecture.puml](src/test/resources/architecture.puml) file.
+
+Several architecture tests have been created to **enforce architectural boundaries** and ensure the hexagonal
+architecture principles are not violated.
+
+The tests are based on the library `com.tngtech.archunit:archunit-junit5`.
+
+All architecture tests can be found by searching for the `@ArchTest` annotation in the test sources.
+
 ## Project Structure
 
 The project follows a standard Spring Boot application structure:
 
 ```
 src/main/java/com/kairos/pricing/
+├── domain/
+│   ├── model/
+│   ├── port/
+│   └── service/
+├── application/
+│   └── usecase/
+├── infrastructure/
+│   ├── persistence/
+│   │   ├── entity/
+│   │   └── repository/
+│   │   └── mapper/
+│   ├── web/
+│   │   ├── dto/
+│   │   └── mapper/
+│   └── config/
 └── PricingApplication.java  # Main application class
 ```
 

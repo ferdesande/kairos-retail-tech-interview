@@ -1,0 +1,36 @@
+@startuml
+!define BOUNDARY_COLOR #grey
+
+skinparam componentStyle uml2
+skinparam component {
+  BorderColor BOUNDARY_COLOR
+  BackgroundColor #white
+}
+
+package "Infrastructure Layer" {
+  [Web] <<com.kairos.pricing.infrastructure.web..>> as web
+  [Persistence] <<com.kairos.pricing.infrastructure.persistence..>> as persistence
+  [Config] <<com.kairos.pricing.infrastructure.config..>> as config
+}
+
+package "Application Layer" {
+  [UseCase] <<com.kairos.pricing.application..>> as usecase
+}
+
+package "Domain Layer" {
+  [Domain] <<com.kairos.pricing.domain..>> as domain
+}
+
+' Allowed dependencies
+web --> usecase : uses
+persistence --> domain : implements
+config --> web : configures
+config --> persistence : configures
+
+' Forbidden dependencies (shown as hidden to document)
+web -[hidden]-> persistence
+persistence -[hidden]-> web
+
+note top of web : Cannot depend on Persistence
+note top of persistence : Cannot depend on Web
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!define BOUNDARY_COLOR #grey
+
+skinparam componentStyle uml2
+skinparam component {
+  BorderColor BOUNDARY_COLOR
+  BackgroundColor #white
+}
+
+package "Pricing Service Architecture" {
+  [Core] <<com.kairos.pricing>> as core
+  [Domain] <<com.kairos.pricing.domain..>> as domain
+  [Application] <<com.kairos.pricing.application..>> as application
+  [Infrastructure] <<com.kairos.pricing.infrastructure..>> as infrastructure
+}
+
+' Allowed dependencies
+application --> domain : uses
+infrastructure --> domain : implements ports
+infrastructure --> application : exposes
+core --> infrastructure : bootstrap
+
+' Forbidden dependencies (documented)
+domain -[hidden]-> application
+domain -[hidden]-> infrastructure
+
+note top of domain : No dependencies to outer layers
+note bottom of core : Application entry point
+@enduml
