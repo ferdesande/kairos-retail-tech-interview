@@ -122,6 +122,16 @@ public class ApplicationArchitectureTest {
     }
 
     @ArchTest
+    void onlyInfrastructureRepositoryShouldDependOnSpringDataRepositories(JavaClasses classes) {
+        noClasses()
+                .that().resideOutsideOfPackage("..infrastructure.persistence.repository..")
+                .should().dependOnClassesThat()
+                .resideInAnyPackage("org.springframework.data.repository..",
+                        "org.springframework.data.jpa.repository..")
+                .allowEmptyShould(true);
+    }
+
+    @ArchTest
     void onlyControllersShouldHaveControllerAnnotation(JavaClasses classes) {
         classes()
                 .that().areAnnotatedWith(RestController.class)

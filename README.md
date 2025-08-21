@@ -46,6 +46,19 @@ src/main/java/com/kairos/pricing/
 └── PricingApplication.java  # Main application class
 ```
 
+## Database
+
+Currently, this project uses H2 in-memory database for development and testing.
+
+### Database Setup
+
+The database schema is automatically created from `schema.sql` and populated with sample data from `data.sql` on application startup.
+
+**Configuration:**
+- **Schema creation**: Explicit SQL scripts (`schema.sql`)
+- **Data initialization**: Sample pricing data (`data.sql`)
+- **JPA validation**: Hibernate validates entity mapping against schema (`ddl-auto: validate`)
+
 ## Building and Running the Application
 
 ### Prerequisites
