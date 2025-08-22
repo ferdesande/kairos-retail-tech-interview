@@ -4,6 +4,7 @@ import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition;
+import org.junit.jupiter.api.DisplayName;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,8 @@ import static com.tngtech.archunit.library.plantuml.rules.PlantUmlArchCondition.
 import static com.tngtech.archunit.library.plantuml.rules.PlantUmlArchCondition.adhereToPlantUmlDiagram;
 
 @AnalyzeClasses(packages = "com.kairos.pricing")
-public class ApplicationArchitectureTest {
+@DisplayName("Architecture Tests")
+public class ArchitectureTest {
     private final static String SPRING_BOOT_SUBPACKAGES = "org.springframework..";
     private final static String PROJECT_ROOT = "com.kairos.pricing";
     private final static String DOMAIN_LAYER = PROJECT_ROOT + ".domain";
@@ -28,7 +30,7 @@ public class ApplicationArchitectureTest {
 
     @ArchTest
     void plantUmlDiagramIsNotViolated(JavaClasses classes) {
-        var plantUmlDiagram = ApplicationArchitectureTest.class.getResource(PACKAGES_ARCH_FILE);
+        var plantUmlDiagram = ArchitectureTest.class.getResource(PACKAGES_ARCH_FILE);
         classes().should(
                 adhereToPlantUmlDiagram(
                         Objects.requireNonNull(plantUmlDiagram),
@@ -43,7 +45,6 @@ public class ApplicationArchitectureTest {
                 .matching(PROJECT_ROOT + ".(*)..")
                 .should()
                 .beFreeOfCycles()
-                .allowEmptyShould(true)
                 .check(classes);
     }
 
@@ -58,7 +59,7 @@ public class ApplicationArchitectureTest {
                 .that().resideInAPackage(DOMAIN_LAYER + "..")
                 .should().dependOnClassesThat()
                 .resideInAnyPackage(SPRING_BOOT_SUBPACKAGES)
-                .allowEmptyShould(true);
+                .check(classes);
     }
 
     @ArchTest
@@ -67,12 +68,12 @@ public class ApplicationArchitectureTest {
                 .that().resideInAPackage(APPLICATION_LAYER + "..")
                 .should().dependOnClassesThat()
                 .resideInAnyPackage(SPRING_BOOT_SUBPACKAGES)
-                .allowEmptyShould(true);
+                .check(classes);
     }
 
     @ArchTest
     void infrastructureIsolationIsNotViolated(JavaClasses classes) {
-        var isolationDiagram = ApplicationArchitectureTest.class.getResource(INFRASTRUCTURE_ISOLATION_ARCH_FILE);
+        var isolationDiagram = ArchitectureTest.class.getResource(INFRASTRUCTURE_ISOLATION_ARCH_FILE);
         classes().should(
                 adhereToPlantUmlDiagram(
                         Objects.requireNonNull(isolationDiagram),
@@ -87,7 +88,6 @@ public class ApplicationArchitectureTest {
                 .that().resideInAPackage(INFRASTRUCTURE_LAYER + ".persistence.entity..")
                 .should().dependOnClassesThat()
                 .resideInAnyPackage(DOMAIN_LAYER + ".service..", APPLICATION_LAYER + ".usecase..")
-                .allowEmptyShould(true)
                 .check(classes);
     }
 
@@ -97,7 +97,6 @@ public class ApplicationArchitectureTest {
                 .that().resideInAPackage(INFRASTRUCTURE_LAYER + ".persistence..")
                 .should().dependOnClassesThat()
                 .resideInAPackage(INFRASTRUCTURE_LAYER + ".web..")
-                .allowEmptyShould(true)
                 .check(classes);
     }
 
@@ -108,7 +107,6 @@ public class ApplicationArchitectureTest {
                 .should().dependOnClassesThat()
                 .resideInAnyPackage(INFRASTRUCTURE_LAYER + ".persistence.entity..",
                         INFRASTRUCTURE_LAYER + ".persistence.repository..")
-                .allowEmptyShould(true)
                 .check(classes);
     }
 
@@ -117,7 +115,6 @@ public class ApplicationArchitectureTest {
         classes()
                 .that().areAnnotatedWith(Repository.class)
                 .should().resideInAPackage(INFRASTRUCTURE_LAYER + ".persistence.repository..")
-                .allowEmptyShould(true)
                 .check(classes);
     }
 
@@ -128,7 +125,7 @@ public class ApplicationArchitectureTest {
                 .should().dependOnClassesThat()
                 .resideInAnyPackage("org.springframework.data.repository..",
                         "org.springframework.data.jpa.repository..")
-                .allowEmptyShould(true);
+                .check(classes);
     }
 
     @ArchTest
@@ -137,7 +134,6 @@ public class ApplicationArchitectureTest {
                 .that().areAnnotatedWith(RestController.class)
                 .or().areAnnotatedWith(Controller.class)
                 .should().resideInAPackage(INFRASTRUCTURE_LAYER + ".web..")
-                .allowEmptyShould(true)
                 .check(classes);
     }
 }
