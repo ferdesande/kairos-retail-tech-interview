@@ -22,6 +22,10 @@ The tests are based on the library `com.tngtech.archunit:archunit-junit5`.
 
 All architecture tests can be found by searching for the `@ArchTest` annotation in the test sources.
 
+### Code Documentation
+Hint comments are added in the code to explain architectural decisions. When a decision might be controversial or 
+non-obvious, it's documented for further understanding (even from your future self).
+
 ## Project Structure
 
 The project follows a standard Spring Boot application structure:
@@ -29,20 +33,22 @@ The project follows a standard Spring Boot application structure:
 ```
 src/main/java/com/kairos/pricing/
 ├── domain/
+│   ├── exception/
 │   ├── model/
 │   ├── port/
 │   └── service/
 ├── application/
 │   └── usecase/
 ├── infrastructure/
+│   ├── config/
 │   ├── persistence/
 │   │   ├── entity/
+│   │   ├── mapper/
 │   │   └── repository/
-│   │   └── mapper/
-│   ├── web/
-│   │   ├── dto/
-│   │   └── mapper/
-│   └── config/
+│   └── web/
+│       ├── controller/
+│       ├── dto/
+│       └── exception/
 └── PricingApplication.java  # Main application class
 ```
 

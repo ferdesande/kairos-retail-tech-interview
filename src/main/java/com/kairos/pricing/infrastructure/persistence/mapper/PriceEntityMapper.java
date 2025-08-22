@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PriceEntityMapper {
+    // Hint: Mapper decouples Entities from Domain model
+    // allowing independent evolution of persistence and domain layers.
+    // Even though the correspondence is one-to-one, the mapper reinforces the decoupling
 
     public Price toDomain(PriceEntity entity) {
         return new Price(
