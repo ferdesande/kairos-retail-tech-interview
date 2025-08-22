@@ -52,7 +52,7 @@ class GetPriceUseCaseTest {
         configureSelectedPrice(List.of(price1, price2), price1);
 
         // When
-        Price actual = useCase.getPrice(SAMPLE_APPLICATION_DATE, SAMPLE_PRODUCT_ID, SAMPLE_BRAND_ID);
+        Price actual = useCase.getApplicablePrice(SAMPLE_APPLICATION_DATE, SAMPLE_PRODUCT_ID, SAMPLE_BRAND_ID);
 
         // Then
         assertThat(actual, Matchers.sameInstance(price1));
@@ -66,7 +66,7 @@ class GetPriceUseCaseTest {
 
         // When
         PriceNotFoundException exception = assertThrows(PriceNotFoundException.class, () ->
-                useCase.getPrice(SAMPLE_APPLICATION_DATE, SAMPLE_PRODUCT_ID, SAMPLE_BRAND_ID)
+                useCase.getApplicablePrice(SAMPLE_APPLICATION_DATE, SAMPLE_PRODUCT_ID, SAMPLE_BRAND_ID)
         );
 
         // Then

@@ -28,7 +28,8 @@ public class PriceController {
     public ResponseEntity<ApplicablePriceResponse> getPrice(@ModelAttribute ApplicablePriceRequest request) {
         request.validate();
 
-        Price price = getPriceUseCase.getPrice(request.applicationDate(), request.productId(), request.brandId());
+        Price price = getPriceUseCase.getApplicablePrice(request.applicationDate(), request.productId(),
+                request.brandId());
         ApplicablePriceResponse response = ApplicablePriceResponse.from(price);
 
         return ResponseEntity.ok(response);

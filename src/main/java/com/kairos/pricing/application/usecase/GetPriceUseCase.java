@@ -17,8 +17,7 @@ public class GetPriceUseCase {
         this.selectionService = selectionService;
     }
 
-    public Price getPrice(LocalDateTime applicationDate, Long productId, Long brandId) {
-        // Question: No requirement about currency.
+    public Price getApplicablePrice(LocalDateTime applicationDate, Long productId, Long brandId) {
         List<Price> prices = repository.findValidPricesForDate(applicationDate, productId, brandId);
 
         if (prices.isEmpty()) {

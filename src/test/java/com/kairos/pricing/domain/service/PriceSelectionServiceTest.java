@@ -44,10 +44,11 @@ class PriceSelectionServiceTest {
         // Given
         List<Price> emptyPrices = Collections.emptyList();
 
-        // When & Then
+        // When
         UnexpectedApplicationException exception = assertThrows(UnexpectedApplicationException.class, () ->
                 service.selectBestPrice(emptyPrices));
 
+        // Then
         assertThat(exception.getMessage(), equalTo("At least one price was expected for selection"));
     }
 
