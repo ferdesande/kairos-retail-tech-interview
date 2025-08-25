@@ -98,3 +98,40 @@ Connection details:
 - JDBC URL: `jdbc:h2:mem:pricingdb`
 - Username: `sa`
 - Password: `password`
+
+## API Examples
+### Basic request
+To verify the application is running, you can execute the following query in a Terminal:
+
+``` bash
+curl "http://localhost:8080/prices?applicationDate=2020-06-14T10:00:00&productId=35455&brandId=1"
+```
+
+The expected response is:
+```json
+{
+  "productId":35455,
+  "brandId":1,
+  "startDate":"2020-06-14T00:00:00",
+  "endDate":"2020-12-31T23:59:59",
+  "priceList":1,
+  "price":35.50,
+  "currency":"EUR"
+}
+```
+
+### Error example
+Execute
+
+``` bash
+curl "http://localhost:8080/prices?applicationDate=2020-06-14T10:00:00&productId=1&brandId=1"
+```
+
+The expected response is:
+```json
+{
+  "type":"Not Found",
+  "detail":"No valid price found",
+  "status":404
+}
+```
